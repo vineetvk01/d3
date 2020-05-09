@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checking event</title>
+  
+</head>
+<body>
+  <div>
+    <h1>D3.Js</h1>
+    <h3>Bar with percentage</h3>
+    <table id="data-bar-percentage" style="width:100%">
+      <tr>
+        <td><b>Tags</b></td>
+        <td><b>Value</b></td>
+      </tr>
+    </table>
+    <div id="bar-percentage"></div>
+    <h3>Bar with numbers</h3>
+    <table id="data-bar-number" style="width:100%">
+      <tr>
+        <td><b>Tags</b></td>
+        <td><b>Value</b></td>
+      </tr>
+    </table>
+    <div id="bar-number"></div>
+    <h3>website Traffic</h3>
+    <table id="data-web-traffic" style="width:100%">
+      <tr>
+        <td><b>Tags</b></td>
+        <td><b>Date</b></td>
+        <td><b>Value</b></td>
+      </tr>
+    </table>
+    <p>--------</p>
+    <p>Reload for transition</p>
+    <div id="web-traffic"></div>
+  </div>
+</body>
+<script>
+
+</script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script type="text/javascript" src="./graphs.js" ></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
+<script>
+
+// Define Data
+// Can be an API call / CSV file
+
+const barPercentageData = {
+  data: [
+    { value:32, tag: 'Rank 1' },
+    { value:15, tag: 'Rank 2' },
+    { value:16, tag: 'Rank 3' },
+    { value:13, tag: 'Rank 4' },
+    { value:9, tag: 'Rank 5' },
+    { value:6, tag: 'Rank 6' },
+    { value:3, tag: 'Rank 7' },
+    { value:1, tag: 'Rank -' },
+    { value:2, tag: 'Rank 8' },
+    { value:2, tag: 'Rank 9' },
+    { value:1, tag: 'Rank 10' },
+  ],
+  type: 'percentage'
+}
+
+const barNumberData = {
+  data: [
+    { value:30, tag: 'Rank 1' },
+    { value:40, tag: 'Rank 2' },
+    { value:50, tag: 'Rank 3' },
+    { value:90, tag: 'Rank 4' },
+    { value:20, tag: 'Rank 5' },
+    { value:99, tag: 'Rank 6' },
+  ],
+  type: 'number'
+}
+
+const websiteTraffic = {
+  data: [
+    { tag: ' Day: 1', date: '2020-05-01', value: 2000},
+    { tag: ' Day: 2', date: '2020-05-02', value: 2000},
+    { tag: ' Day: 3', date: '2020-05-03', value: 1000},
+    { tag: ' Day: 4', date: '2020-05-04', value: 300},
+    { tag: ' Day: 5', date: '2020-05-05', value: 1000},
+    { tag: ' Day: 6', date: '2020-05-06', value: 2000},
+    { tag: ' Day: 7', date: '2020-05-07', value: 1500},
+    { tag: ' Day: 8', date: '2020-05-08', value: 1000},
+    { tag: ' Day: 9', date: '2020-05-09', value: 1000},
+    { tag: ' Day: 10', date: '2020-05-10', value: 1000},
+    { tag: ' Day: 11', date: '2020-05-11', value: 1000},
+    { tag: ' Day: 12', date: '2020-05-12', value: 1000},
+    { tag: ' Day: 13', date: '2020-05-13', value: 1700},
+    { tag: ' Day: 14', date: '2020-05-14', value: 3000},
+    { tag: ' Day: 15', date: '2020-05-15', value: 2000},
+    { tag: ' Day: 16', date: '2020-05-16', value: 3000},
+    { tag: ' Day: 17', date: '2020-05-17', value: 3000},
+    { tag: ' Day: 18', date: '2020-05-18', value: 4000},
+    { tag: ' Day: 19', date: '2020-05-19', value: 3000},
+    { tag: ' Day: 20', date: '2020-05-20', value: 2000},
+    { tag: ' Day: 21', date: '2020-05-21', value: 2000},
+    { tag: ' Day: 22', date: '2020-05-22', value: 3000},
+    { tag: ' Day: 23', date: '2020-05-23', value: 3000},
+    { tag: ' Day: 24', date: '2020-05-24', value: 4000},
+    { tag: ' Day: 25', date: '2020-05-25', value: 2000},
+    { tag: ' Day: 26', date: '2020-05-26', value: 3000},
+    { tag: ' Day: 27', date: '2020-05-27', value: 3000},
+    { tag: ' Day: 28', date: '2020-05-28', value: 4000},
+    { tag: ' Day: 29', date: '2020-05-29', value: 2000},
+    { tag: ' Day: 30', date: '2020-05-30', value: 3000},
+  ],
+  last_month: 90000,
+  target_of_month: 100000,
+}
+
+// Display Data in Table in View
+{
+  const table = document.getElementById('data-bar-percentage')
+  const { data } = barPercentageData;
+  data.forEach((d)=>{
+    table.innerHTML = table.innerHTML + `<tr><td>${d.tag}</td><td>${d.value}%</td></tr>`;
+  })
+}
+
+{
+  const table = document.getElementById('data-bar-number')
+  const { data } = barNumberData;
+  data.forEach((d)=>{
+    table.innerHTML = table.innerHTML + `<tr><td>${d.tag}</td><td>${d.value}</td></tr>`;
+  })
+}
+
+{
+  const table = document.getElementById('data-web-traffic')
+  const { data } = websiteTraffic;
+  data.forEach((d)=>{
+    table.innerHTML = table.innerHTML + `<tr><td>${d.tag}</td><td>${d.date}</td><td>${d.value}</td></tr>`;
+  })
+  const sum = websiteTraffic.data.reduce((acc, d)=>{
+  return acc + d.value;
+  },0)
+  table.innerHTML = table.innerHTML + `<tr><td>SUM</td><td>----</td><td><b>${sum}</b></td></tr>`;
+}
+
+// Visualize data in D3
+
+// 1. Data with percentage
+const graphPercentage = visualizeBar( barPercentageData, { barHeight: 20, totalWith: 1000 });
+graphPercentage.attach("#bar-percentage");
+
+// 2. Data with percentage
+const graphNumber = visualizeBar(barNumberData);
+graphNumber.attach('#bar-number');
+
+// 3. Data in Donut chart
+const startPeriod = '2020-05-01';
+const endPeriod = '2020-05-30';
+const config = { color: '#333', backgroundColor: '#fff'};
+const trafficDonut = visualizeDonut(websiteTraffic, startPeriod, endPeriod /* , config */ );
+trafficDonut.attach('#web-traffic');
+
+
+</script>
+</html>
